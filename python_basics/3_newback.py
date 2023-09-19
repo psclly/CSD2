@@ -21,7 +21,7 @@ def durations_to_timestaps(array):
 #Take note durations from input, and handle any bad inputs
 #Put all inputs in an array.
 print("-----------------------------------\nSyntax: 0.25 for 16th, 0.5 for 8th, 1 for 4th \n-----------------------------------")
-while (newNoteDuration != 0):
+while(newNoteDuration != 0):
     try:
         newNoteDuration = float(input("Enter a note duration (input 0 to finish)"))
     except:
@@ -36,14 +36,28 @@ while (newNoteDuration != 0):
     else:
         print("That's not a valid note duration, refer to the syntax")
 
-#DEBUG
-print("Note durations: " + str(noteDurations))
-print("Timestamps: " + str(durations_to_timestaps(noteDurations)))
-#------
+#Asking for BPM and making sure the user doesnt throw in any shenanigans
+correctlyNotated = False
+while(correctlyNotated == False):
+    try:
+        speedBPM = int(input("Enter a BPM: "))
+    except:
+        print("Wildly invalid input detected, BPM is a positive integer that isn't 0, yes?")
+    if(speedBPM > 0):
+        correctlyNotated = True
 
-timeStamps = durations_to_timestaps(noteDurations)
+#Put the note durations into "oldstamps", then convert it according to the BPM into the new finished timeStamps list
+timeStamps = []
+speedQuotient = speedBPM / 120
+
+oldStamps = durations_to_timestaps(noteDurations)
+for time in oldStamps:
+    timeStamps.append(time / speedQuotient)
+
+
+#Start time, everytime the difference between the starting time and current time passes a timestamp...
+#... play the sample and remove the timestamp from the list to wait for the next one
 tZero = TIME.time()
-
 while True:
     tPassed = TIME.time() - tZero
     if(timeStamps):
@@ -51,7 +65,6 @@ while True:
             print(str(timeStamps[0]) + " is bigger than " + str(tPassed))
             woodSound.play()
             timeStamps.pop(0)
-            print(timeStamps)
     else:
         print("Done!")
         break
