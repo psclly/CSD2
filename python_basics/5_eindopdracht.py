@@ -6,7 +6,37 @@ from tqdm import tqdm
 import os
 import sys 
 
+#CSV for reading and handling csv files
+import csv
+
+#set global default response
 response = "n"
+
+def hhmmss_to_seconds(string):
+    parts = string.split(':')
+    minutes = int(parts[0])
+    seconds, miliseconds = map(int, parts[1].split('.'))
+    total_seconds = minutes * 60 + seconds + miliseconds * 10**-3
+    return total_seconds
+
+def getCsvTimestamps(csv_filename):
+    timestamps = []
+    with open(csv_filename, 'r') as file:
+        csv_reader = csv.DictReader(file)
+        for row in csv_reader:
+            timestamps.append(hhmmss_to_seconds(row["Time"]))
+    return timestamps
+
+def getCsvAbilities(csv_filename):
+    abilities = []
+    with open(csv_filename, 'r') as file:
+        csv_reader = csv.DictReader(file)
+        for row in csv_reader:
+            ability_name = row["Ability"].split()[0]
+            abilities.append(ability_name)
+    return abilities
+            
+
 
 def generateMIDI(events, _bpm):
     print("Generating MIDI..")
@@ -36,7 +66,7 @@ def generateMIDI(events, _bpm):
         "crash": 62
     }
 
-    #Start parsing events list
+    #Start parsing events list. DONT ADD NOTES IF THE EVENT IS "END"
     for event in events:
         if event["type"] != "end":
             #Note timestamp divided by the BPM based note_dur to denote correct timing
@@ -50,17 +80,17 @@ def generateMIDI(events, _bpm):
     for i in tqdm(range(len(events))):
         t.sleep(0.1)  # sleep one second in each iteration
 
-    exported = False
     #Export Midi file in a way I honestly don't really get but I'm sure it works
     #Also, if the filename inserted is invalid, try to catch it
+    exported = False
     while exported == False:
         try:
             filename+= ".midi"
             print("attempting to export to " + filename)
-            #wb indicates it should be written in binary form, not a text file
-            with open(filename,'wb') as outf:
+            with open(filename,'wb') as outf: #wb indicates it should be written in binary form, not a text file
                 midifile.writeFile(outf)
             exported = True
+            
         except:
             print("####Error while writing file, perhaps you named it wrong?###")
             filename = input("Input a new (valid) filename, not ending in extension")
@@ -98,21 +128,30 @@ def main():
     snare_sample = sa.WaveObject.from_wave_file("snare.wav")
     crash_sample = sa.WaveObject.from_wave_file("crash.wav")
 
-    
-    t0 = t.time()
+    all_csv_timestamps = getCsvTimestamps("log.csv")
+    all_csv_abilities = getCsvAbilities("log.csv")
 
-    newEvent(0, "kick", 100, 100)
-    newEvent(2, "kick", 80, 100)
-    newEvent(1, "snare", 100, 100)
-    newEvent(3, "snare", 100, 100)
+
+    for i in range(100):
+        try:
+            if all_csv_abilities[i] == "Fall":
+                newEvent(all_csv_timestamps[i], "snare", 100, 1)
+        except:
+            print("end of the line")
+
+    #EVENT GENERATOR HERE
+    newEvent(1, "snare", 100, 1)
+    newEvent(3, "snare", 100, 1)
     for i in range(4):
-        newEvent(i, "crash", 100, 100)
-        newEvent(i + 0.5, "crash", 50, 100)
-    newEvent(4, "end", 0, 0)
+        newEvent(i, "crash", 100, 1)
+        newEvent(i + 0.5, "crash", 50, 1)
+    newEvent(30, "end", 0, 0)
 
-    print(events)
-
+    #needed variables
+    t0 = t.time()
     whileLoop = True
+
+    #For every event, play the sample at the right time
     while whileLoop == True:
         tCurrent = t.time() - t0
         print(tCurrent)
@@ -137,7 +176,8 @@ def main():
 
                 if event["type"] != "dacapo":
                     event["played"] = True #once an event has played, put them on "played"
-                    
+    
+    #Request judgement from user
     judgement = input("How was that? Would you like to save it? Y/N/quit \n")
 
     if judgement == "Y":
@@ -146,11 +186,15 @@ def main():
     return judgement
 #-------------End of main()
 
+print(getCsvTimestamps("log.csv"))
+print(getCsvAbilities("log.csv"))
+
 
 while response != "quit":
     response = main()
     print("Returning to start..")
     t.sleep(2)
+
 
 print("Thanks for using City-MIDI Generator")
 t.sleep(3)
