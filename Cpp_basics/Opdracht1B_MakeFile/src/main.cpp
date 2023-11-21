@@ -9,7 +9,9 @@ int main(){
     timpani.playSound();
     voice.playSound();
     viola.playSound();
+   
+    std::cout << "rolling!";
+    timpani.roll(5);
+
     return 0;
 }
-
-
