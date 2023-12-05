@@ -32,7 +32,7 @@ void Oscillator::tick(){
     calculate();
     phase += phaseStep;
     if(phase > 1){
-        phase -= 1;
+        phase = 0;
     }
 };
 
