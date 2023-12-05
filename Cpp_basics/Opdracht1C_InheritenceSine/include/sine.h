@@ -4,8 +4,8 @@
 
 class Sine : public Oscillator{
     public:
-        Sine(float f, float sr);
-        void tick();    
+        Sine(float f, float sr);   
+        void calculate();
 };
 
 #endif

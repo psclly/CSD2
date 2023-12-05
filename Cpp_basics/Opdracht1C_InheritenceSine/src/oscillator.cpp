@@ -4,7 +4,6 @@
 
 Oscillator::Oscillator(float f, float sr){
     this->frequency = f;
-    std::cout << "Constructed Sine with frequency " << this->frequency << std::endl;
     sample = 0;
     sampleRate = sr;
 
@@ -27,3 +26,8 @@ void Oscillator::setFrequency(float f){
 float Oscillator::getFrequency(){
     return this->frequency;
 }
+
+void Oscillator::tick(){
+    phase += phaseStep;
+    calculate();
+};

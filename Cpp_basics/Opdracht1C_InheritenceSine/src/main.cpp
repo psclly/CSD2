@@ -7,23 +7,17 @@
 
 int main(){
     const float samplerate = 44100;
-    Square u(2, samplerate);
+    Square wave(3, samplerate);
 
     std::remove("output.csv");
     std::ofstream csvFile("output.csv");
     csvFile << "Time,Sample" << std::endl;
 
-
-
-
     for(int i = 0; i<=samplerate; i++){
-        std::cout << i << " => " << u.getSample() << std::endl;
-        csvFile << i << ", " << u.getSample() << std::endl;
+        //std::cout << i << " => " << wave.getSample() << std::endl;
+        csvFile << i << ", " << wave.getSample() << std::endl;
 
-        u.tick();
-        
-
-
+        wave.tick();
     };
 
     return 0;

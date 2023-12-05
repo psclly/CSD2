@@ -5,8 +5,7 @@
 class Square : public Oscillator{
     public:
         Square(float f, float sr);
-        void tick();
-        float getSample() override;
+        void calculate();
 };
 
 #endif

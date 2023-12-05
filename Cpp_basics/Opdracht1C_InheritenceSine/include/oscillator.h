@@ -7,11 +7,14 @@ class Oscillator{
         Oscillator(float f, float sr);
         ~Oscillator();
     
-        virtual float getSample();
+        float getSample();
         void setFrequency(float f);
         float getFrequency();
+        void tick();
 
         //TODO make the sounds
+
+        virtual void calculate() = 0;
 
     protected:    
         float frequency;

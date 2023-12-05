@@ -3,18 +3,9 @@
 #include <cmath>
 
 Square::Square(float f, float sr) : Oscillator(f, sr){
-    std::cout << "Created Square Oscillator with parameters " << f << sr << std::endl;
+    std::cout << "Created Square Oscillator with frequency " << f << std::endl;
 };
 
-void Square::tick(){
-    phase += phaseStep;
+void Square::calculate(){
     sample = sin(2 * M_PI * phase);
-};
-
-float Square::getSample(){
-    if (sample > 0){
-        return 1;
-    } else {
-        return -1;
-    }
-};
+}
