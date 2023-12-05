@@ -7,5 +7,8 @@ Square::Square(float f, float sr) : Oscillator(f, sr){
 };
 
 void Square::calculate(){
-    sample = sin(2 * M_PI * phase);
+    sample = amplitude;
+    if(phase >= 0.5f){
+        sample*=-1;
+    }
 }

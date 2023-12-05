@@ -11,10 +11,13 @@ class Oscillator{
         void setFrequency(float f);
         float getFrequency();
         void tick();
+        float getPhase();
 
         //TODO make the sounds
 
         virtual void calculate() = 0;
+
+
 
     protected:    
         float frequency;
@@ -22,6 +25,7 @@ class Oscillator{
         float phaseStep;
         float phase;
         float sampleRate;
+        float amplitude;
 };
 
 #endif

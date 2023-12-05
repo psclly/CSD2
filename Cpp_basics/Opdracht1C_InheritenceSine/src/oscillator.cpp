@@ -6,6 +6,7 @@ Oscillator::Oscillator(float f, float sr){
     this->frequency = f;
     sample = 0;
     sampleRate = sr;
+    amplitude = 1;
 
     phaseStep = this->frequency / sampleRate;
 };
@@ -28,6 +29,13 @@ float Oscillator::getFrequency(){
 }
 
 void Oscillator::tick(){
-    phase += phaseStep;
     calculate();
+    phase += phaseStep;
+    if(phase > 1){
+        phase -= 1;
+    }
 };
+
+float Oscillator::getPhase(){
+    return phase;
+}
