@@ -1,0 +1,13 @@
+/home/caro/Documents/csd2/funthon/hello_world/target/debug/deps/libcpal-9a6dc4c6029f8d23.rmeta: /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/lib.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/error.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/host/mod.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/host/alsa/mod.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/host/alsa/enumerate.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/host/null/mod.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/platform/mod.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/samples_formats.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/traits.rs
+
+/home/caro/Documents/csd2/funthon/hello_world/target/debug/deps/cpal-9a6dc4c6029f8d23.d: /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/lib.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/error.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/host/mod.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/host/alsa/mod.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/host/alsa/enumerate.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/host/null/mod.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/platform/mod.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/samples_formats.rs /home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/traits.rs
+
+/home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/lib.rs:
+/home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/error.rs:
+/home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/host/mod.rs:
+/home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/host/alsa/mod.rs:
+/home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/host/alsa/enumerate.rs:
+/home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/host/null/mod.rs:
+/home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/platform/mod.rs:
+/home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/samples_formats.rs:
+/home/caro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cpal-0.15.2/src/traits.rs:
