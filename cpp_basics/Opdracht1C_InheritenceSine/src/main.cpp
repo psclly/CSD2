@@ -9,40 +9,43 @@
 
 class CustomCallback : public AudioCallback {
 public:
-  void prepare(int rate) override {
-    samplerate = (float) rate;
-    wave1.setSamplerate(samplerate);
-    wave2.setSamplerate(samplerate);
-    wave3.setSamplerate(samplerate);
-    std::cout << "\nsamplerate: " << samplerate << "\n";
-  }
-
-  void process(AudioBuffer buffer) override {
-    for (int i = 0; i < buffer.numFrames; ++i) {
-      // write sample to buffer at channel 0, amp = 0.25
-      buffer.outputChannels[0][i] = wave1.getSample() + wave2.getSample() + wave3.getSample();
-      
-      wave1.tick();
-      wave2.tick();
-      wave3.tick();
+    void prepare(int rate) override {
+        samplerate = (float) rate;
+        wave1.setSamplerate(samplerate);
+        wave2.setSamplerate(samplerate);
+        wave3.setSamplerate(samplerate);
+        std::cout << "\nsamplerate: " << samplerate << "\n";
     }
-  }
 
-  private:
-    float samplerate = 44100;
-    Sine wave1 = Sine(440, samplerate);
-    Square wave2 = Square(660, samplerate);
-    Saw wave3 = Saw(220, samplerate);
+    void process(AudioBuffer buffer) override {
+        for (int i = 0; i < buffer.numFrames; ++i) {
+        // write sample to buffer at channel 0, amp = 0.25
+        buffer.outputChannels[0][i] = wave1.getSample() + wave2.getSample() * wave3.getSample() * 1/2;
+
+        wave1.tick();
+        wave2.tick();
+        wave3.tick();
+        }
+    }
+
+    private:
+        float samplerate = 44100;
+        Sine wave1 = Sine(440, samplerate);
+        Square wave2 = Square(660 , samplerate);
+        Saw wave3 = Saw(700, samplerate);
+    public:
+        void changeFrequency(int f){
+            wave1.setFrequency(f);
+            wave2.setFrequency(f);
+            wave3.setFrequency(f);
+    }
 };
 
 int main(){
     auto callback = CustomCallback {};
     auto jackModule = JackModule { callback };
 
-    jackModule.init (0, 1);
-
-
-    const float samplerate = 44100;
+    jackModule.init(0, 1);
 
     std::remove("output.csv");
     std::ofstream csvFile("output.csv");
@@ -50,9 +53,16 @@ int main(){
 
     bool running = true;
     while (running) {
-      switch (std::cin.get()) {
-          case 'q':
-              running = false;
+        switch (std::cin.get()) {
+            case 'q':
+                running = false;
+                break;
+            case 'f':
+                std::cout << "Enter Frequency: ";
+                int newFrequency = std::cin.get();
+                callback.changeFrequency(newFrequency);
+                break;
+            
       }
   }
 
