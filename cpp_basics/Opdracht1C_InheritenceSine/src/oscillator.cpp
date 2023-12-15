@@ -24,6 +24,10 @@ void Oscillator::setFrequency(float f){
     phaseStep = this->frequency / sampleRate;
 }
 
+void Oscillator::setSamplerate(int r){
+    sampleRate = r;
+}
+
 float Oscillator::getFrequency(){
     return this->frequency;
 }

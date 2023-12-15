@@ -9,6 +9,7 @@ class Oscillator{
     
         float getSample();
         void setFrequency(float f);
+        void setSamplerate(int r);
         float getFrequency();
         void tick();
         float getPhase();
