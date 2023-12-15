@@ -3,6 +3,7 @@
 #include "../include/sine.h"
 #include "../include/square.h"
 #include "../include/saw.h"
+#include "../include/synthesizer.h"
 #include <fstream>
 #include <cstdio>
 #include "jack_module.h"
@@ -12,32 +13,25 @@ public:
     void prepare(int rate) override {
         samplerate = (float) rate;
         wave1.setSamplerate(samplerate);
-        wave2.setSamplerate(samplerate);
-        wave3.setSamplerate(samplerate);
         std::cout << "\nsamplerate: " << samplerate << "\n";
     }
 
     void process(AudioBuffer buffer) override {
         for (int i = 0; i < buffer.numFrames; ++i) {
         // write sample to buffer at channel 0, amp = 0.25
-        buffer.outputChannels[0][i] = wave1.getSample() + wave2.getSample() * wave3.getSample() * 1/2;
+        buffer.outputChannels[0][i] = wave1.getSample();
 
         wave1.tick();
-        wave2.tick();
-        wave3.tick();
         }
     }
 
     private:
         float samplerate = 44100;
-        Sine wave1 = Sine(440, samplerate);
-        Square wave2 = Square(660 , samplerate);
-        Saw wave3 = Saw(700, samplerate);
+        Synthesizer wave1 = Synthesizer(0, 440, 44100);
+
     public:
         void changeFrequency(int f){
             wave1.setFrequency(f);
-            wave2.setFrequency(f);
-            wave3.setFrequency(f);
     }
 };
 
@@ -52,6 +46,7 @@ int main(){
     csvFile << "Time,Sample,Phase" << std::endl;
 
     bool running = true;
+    
     while (running) {
         switch (std::cin.get()) {
             case 'q':
@@ -59,7 +54,8 @@ int main(){
                 break;
             case 'f':
                 std::cout << "Enter Frequency: ";
-                int newFrequency = std::cin.get();
+                int newFrequency = 0;
+                std::cin >> newFrequency;
                 callback.changeFrequency(newFrequency);
                 break;
             
