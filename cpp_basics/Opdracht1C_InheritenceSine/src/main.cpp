@@ -7,32 +7,38 @@
 #include <fstream>
 #include <cstdio>
 #include "jack_module.h"
+#include <math.h>
+
+
 
 class CustomCallback : public AudioCallback {
-public:
-    void prepare(int rate) override {
-        samplerate = (float) rate;
-        wave1.setSamplerate(samplerate);
-        std::cout << "\nsamplerate: " << samplerate << "\n";
-    }
-
-    void process(AudioBuffer buffer) override {
-        for (int i = 0; i < buffer.numFrames; ++i) {
-        // write sample to buffer at channel 0, amp = 0.25
-        buffer.outputChannels[0][i] = wave1.getSample();
-
-        wave1.tick();
-        }
-    }
-
     private:
+        int voices = 4;
+        float sample = 0;
         float samplerate = 44100;
-        Synthesizer wave1 = Synthesizer(0, 440, 44100);
+        Synthesizer wave = Synthesizer(0, 440, 44100);
 
+    
     public:
         void changeFrequency(int f){
-            wave1.setFrequency(f);
-    }
+            wave.setFrequency(f);
+        }
+
+        void nextNote(){
+            wave.nextNote();
+        }
+        
+        void prepare(int rate) override {
+            samplerate = (float) rate;
+            wave.setSamplerate(samplerate);
+            std::cout << "\nsamplerate: " << samplerate << "\n";
+        }
+
+        void process(AudioBuffer buffer) override {
+            for (int i = 0; i < buffer.numFrames; ++i) {
+                buffer.outputChannels[0][i] = sample;
+            }
+        }
 };
 
 int main(){
@@ -44,23 +50,27 @@ int main(){
     std::remove("output.csv");
     std::ofstream csvFile("output.csv");
     csvFile << "Time,Sample,Phase" << std::endl;
-
     bool running = true;
     
     while (running) {
+        int newFrequency = 0;
         switch (std::cin.get()) {
             case 'q':
                 running = false;
                 break;
             case 'f':
                 std::cout << "Enter Frequency: ";
-                int newFrequency = 0;
                 std::cin >> newFrequency;
                 callback.changeFrequency(newFrequency);
                 break;
-            
+            case 'n':
+                std::cout << "Next Note in Melody";
+                callback.nextNote();  
+                break;
+            default:
+                break;
       }
-  }
+    }
 
     return 0;
 }

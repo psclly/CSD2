@@ -13,9 +13,15 @@ class Synthesizer{
         void tick();
         void setSamplerate(float sr);
         void setFrequency(float f);
+        void nextNote();
+
 
     private:  
         Oscillator* synthWave = nullptr;
+        int currentNoteIndex = 0;
+        int melody[];
+
+        
 };
 
 #endif

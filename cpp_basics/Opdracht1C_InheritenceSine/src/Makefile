@@ -1,7 +1,7 @@
 CXX= g++
 CXXFLAGS = -I/usr/local/include -Wall -std=c++17
 LDFLAGS= -ljack
-SOURCE= main.o oscillator.o sine.o square.o saw.o
+SOURCE= main.o oscillator.o sine.o square.o saw.o synthesizer.o
 TARGET= buildexe
 
 $(TARGET) : $(SOURCE)
