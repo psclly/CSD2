@@ -7,8 +7,14 @@ float mtof(float midi){
     return 440.0 * pow(2.0, (midi - 69.0f)/12.0f);
 }
 
-Synthesizer::Synthesizer(int type, float freq, float sr){
+Synthesizer::Synthesizer(float freq, float sr, int type){
+    std::cout << "print A";     
     int melody[5];
+    Sine sineWave = Sine(freq, sr);
+    Square squareWave = Square(freq, sr);
+    Saw sawWave = Saw(freq,sr);
+
+    
     for(int i = 0; i < 5; ++i){
         melody[i] = 60 + i * 2;
     }
@@ -17,13 +23,13 @@ Synthesizer::Synthesizer(int type, float freq, float sr){
 
     switch(type){
         case 0:
-            synthWave = new Sine(freq, sr);
+            pointWave = &sineWave;
             break;
         case 1:
-            synthWave = new Square(freq, sr);
+            pointWave = &squareWave;
             break;
         case 2:
-            synthWave = new Saw(freq, sr);
+            pointWave = &sawWave;
             break;
         default:
             std::cout << "Invalid arguments for Synthesizer";
@@ -31,22 +37,24 @@ Synthesizer::Synthesizer(int type, float freq, float sr){
     }
 };
 
-Synthesizer::~Synthesizer(){}
+Synthesizer::~Synthesizer(){
+    delete pointWave;
+}
 
 float Synthesizer::getSample(){
-    return synthWave->getSample();
+    return pointWave->getSample();
 };
 
 void Synthesizer::tick(){
-    synthWave->tick();
+    pointWave->tick();
 }
 
 void Synthesizer::setSamplerate(float sr){
-    synthWave->setSamplerate(sr);
+    pointWave->setSamplerate(sr);
 }
 
 void Synthesizer::setFrequency(float f){
-    synthWave->setFrequency(f);
+    pointWave->setFrequency(f);
 }
 
 void Synthesizer::nextNote(){
