@@ -16,6 +16,7 @@ class CustomCallback : public AudioCallback {
         int voices = 4;
         float sample = 0;
         float samplerate = 44100;
+
         Synthesizer wave = Synthesizer(0, 440, 44100);
 
     
@@ -42,7 +43,9 @@ class CustomCallback : public AudioCallback {
 };
 
 int main(){
+    std::cout << "This doesnt work?";
     auto callback = CustomCallback {};
+    std::cout << "success!";
     auto jackModule = JackModule { callback };
 
     jackModule.init(0, 1);

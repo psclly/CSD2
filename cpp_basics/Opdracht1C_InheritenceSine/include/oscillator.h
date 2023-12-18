@@ -5,7 +5,7 @@
 class Oscillator{
     public:
         Oscillator(float f, float sr);
-        ~Oscillator();
+        virtual ~Oscillator();
     
         float getSample();
         void setFrequency(float f);

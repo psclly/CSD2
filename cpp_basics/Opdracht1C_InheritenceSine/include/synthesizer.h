@@ -7,7 +7,7 @@
 
 class Synthesizer{
     public:
-        Synthesizer(int type, float freq, float sr);
+        Synthesizer(float freq, float sr, int type);
         ~Synthesizer();
         float getSample();   
         void tick();
@@ -17,11 +17,12 @@ class Synthesizer{
 
 
     private:  
-        Oscillator* synthWave = nullptr;
-        int currentNoteIndex = 0;
-        int melody[];
-
-        
+        int currentNoteIndex;
+        int melody[5];
+        Sine sineWave;
+        Square squareWave;
+        Saw sawWave;
+        Oscillator* pointWave;   
 };
 
 #endif

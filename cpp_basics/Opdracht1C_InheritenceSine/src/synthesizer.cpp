@@ -7,13 +7,13 @@ float mtof(float midi){
     return 440.0 * pow(2.0, (midi - 69.0f)/12.0f);
 }
 
-Synthesizer::Synthesizer(float freq, float sr, int type){
+Synthesizer::Synthesizer(float freq, float sr, int type): 
+    sineWave(freq, sr), 
+    squareWave(freq,sr), 
+    sawWave(freq, sr)
+{
     std::cout << "print A";     
     int melody[5];
-    Sine sineWave = Sine(freq, sr);
-    Square squareWave = Square(freq, sr);
-    Saw sawWave = Saw(freq,sr);
-
     
     for(int i = 0; i < 5; ++i){
         melody[i] = 60 + i * 2;
@@ -23,6 +23,7 @@ Synthesizer::Synthesizer(float freq, float sr, int type){
 
     switch(type){
         case 0:
+            
             pointWave = &sineWave;
             break;
         case 1:
