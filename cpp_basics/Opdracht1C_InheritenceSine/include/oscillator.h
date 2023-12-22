@@ -6,19 +6,16 @@ class Oscillator{
     public:
         Oscillator(float f, float sr);
         virtual ~Oscillator();
-    
+
         float getSample();
+        float getPhase();
+
         void setFrequency(float f);
         void setSamplerate(int r);
         float getFrequency();
+
         void tick();
-        float getPhase();
-
-        //TODO make the sounds
-
-        virtual void calculate() = 0;
-
-
+        virtual void calculate();
 
     protected:    
         float frequency;

@@ -43,3 +43,7 @@ void Oscillator::tick(){
 float Oscillator::getPhase(){
     return phase;
 }
+
+void Oscillator::calculate(){
+    
+}

@@ -14,15 +14,16 @@ class Synthesizer{
         void setSamplerate(float sr);
         void setFrequency(float f);
         void nextNote();
+        void setType(int t);
 
 
     private:  
+        int waveType;
         int currentNoteIndex;
         int melody[5];
-        Sine sineWave;
-        Square squareWave;
-        Saw sawWave;
-        Oscillator* pointWave;   
+        int frameCounter;
+
+        Oscillator* pointWave;
 };
 
 #endif
